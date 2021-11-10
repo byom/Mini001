@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
@@ -13,10 +15,22 @@ public class GameBanner : MonoBehaviour
     private string _adUnitId = "";
 #endif
 
-    private void Start()
+    void Start()
     {
         LoadBanner();
+
+        StartCoroutine(ShowBannerWhenReady());
     }
+
+    IEnumerator ShowBannerWhenReady()
+    {
+        while (!Advertisement.IsReady(_adUnitId))
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+        Advertisement.Banner.Show(_adUnitId);
+    }
+
 
     public void LoadBanner()
     {
