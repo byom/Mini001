@@ -1,2 +1,8 @@
 # Mini001
-2048
+![Firefly Icon](Docs/Firefly_Icon.png)
+
+##### @TODO list:
+- [ ] add Score
+- [ ] add Reset G
+- [ ] add number jumping¡£
+- [ ] android move gusture

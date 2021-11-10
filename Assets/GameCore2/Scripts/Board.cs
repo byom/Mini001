@@ -8,9 +8,6 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = System.Random;
 
-/// <summary>
-/// coder by shlifedev(zero is black)
-/// </summary>
 public class Board : MonoBehaviour
 {
     public enum State
@@ -42,6 +39,7 @@ public class Board : MonoBehaviour
     {
        Debug.Log("Game Over!!!!");
     }
+
     private void CreateBoard()
     {
         /* first initialize empty Node rect*/
@@ -79,12 +77,10 @@ public class Board : MonoBehaviour
                 this.nodeMap.Add(point, node);
             }
         }
-        /* grid 정렬 */
+
         LayoutRebuilder.ForceRebuildLayoutImmediate(emptyNodeRect);
         foreach (var data in nodeData)
             data.position = data.nodeRectObj.GetComponent<RectTransform>().localPosition;
-
-
     }
 
     private bool IsValid(Vector2Int point)
@@ -112,7 +108,6 @@ public class Board : MonoBehaviour
  
     public void Combine(Node from, Node to)
     {
-     //   Debug.Log($"TRY COMBINE {from.point} , {to.point}");
         to.value = to.value * 2;
         from.value = null;
         if (from.realNodeObj != null)
@@ -125,7 +120,6 @@ public class Board : MonoBehaviour
 
     public void Move(Node from, Node to)
     {
-//        Debug.Log($"TRY MOVE {from.point} , {to.point}");
         to.value = from.value;
         from.value = null;  
         if (from.realNodeObj != null)
@@ -385,6 +379,7 @@ public class Board : MonoBehaviour
         } 
         Debug.Log(v);
     }
+
     private void Update()
     {
         UpdateState();
@@ -404,6 +399,7 @@ public class Board : MonoBehaviour
 
     private void Start()
     {
+        CreateRandom();
         CreateRandom();
     }
 }
