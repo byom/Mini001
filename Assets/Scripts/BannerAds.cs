@@ -24,7 +24,7 @@ public class BannerAds : MonoBehaviour
     {
 
     // Disable the button until an ad is ready to show:
-    _showBannerButton.interactable = false;
+        _showBannerButton.interactable = false;
         _hideBannerButton.interactable = false;
 
         // Set the banner position:

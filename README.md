@@ -2,7 +2,11 @@
 ![Firefly Icon](Docs/Firefly_Icon.png)
 
 ##### @TODO list:
-- [ ] add Score
-- [ ] add Reset G
-- [ ] add number jumping¡£
-- [ ] android move gusture
+- [x] add Score
+- [x] add Reset G
+- [ ] add number jumpingï¿½ï¿½
+- [x] android move gesture
+
+### App store:
+- Google Play
+- Aptoide
