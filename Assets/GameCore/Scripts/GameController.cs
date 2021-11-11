@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Advertisements;
-
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -22,7 +22,9 @@ public class GameController : MonoBehaviour
 
     void OnClickReset()
     {
-        Board.Instance.ResetGame();
+        var scene = SceneManager.GetActiveScene();
+
+        SceneManager.LoadScene(scene.name);
     }
 
     void OnUpdateScore(int score)
@@ -36,5 +38,4 @@ public class GameController : MonoBehaviour
 
         Board.Instance.OnUpdateScoreAction -= OnUpdateScore;
     }
-    
 }

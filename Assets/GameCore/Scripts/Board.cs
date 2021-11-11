@@ -64,12 +64,6 @@ public class Board : MonoBehaviour
         return score;
     }
 
-
-    public void ResetGame()
-    {
-        CreateBoard();
-    }
-
     private void CreateBoard()
     {
         /* first initialize empty Node rect*/
@@ -336,7 +330,7 @@ public class Board : MonoBehaviour
         {
             if (IsGameOver())
             {
-                OnGameOver(); ;
+                OnGameOver();
             }
         }
         else

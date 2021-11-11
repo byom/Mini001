@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Advertisements;
 
 
-public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
+public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener
 {
     // @TODO Config data.
     [SerializeField] string _androidGameId;
@@ -15,9 +15,24 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 
     private string _gameId;
 
+    public static AdsManager Instance
+    {
+        get
+        {
+            if (_inst == null) _inst = FindObjectOfType<AdsManager>();
+            return _inst;
+        }
+    }
+
+    private static AdsManager _inst;
+
+    private 
+
     void Awake()
     {
         InitializeAds();
+
+        DontDestroyOnLoad(this);
     }
 
     // Start is called before the first frame update
