@@ -6,51 +6,22 @@ using UnityEngine.Advertisements;
 
 public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
-    [SerializeField] Button _showAdButton;
-    [SerializeField] string _androidAdUnitId = "Interstitial_Android";
-    [SerializeField] string _iOsAdUnitId = "Interstitial_iOS";
 
-    private string _adUnitId;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        _adUnitId = (Application.platform == RuntimePlatform.IPhonePlayer)
-            ? _iOsAdUnitId
-            : _androidAdUnitId;
-
-        _showAdButton.interactable = false;
-    }
-
-    // Update is called once per frame
-    void Start()
-    {
-        LoadAd();
-    }
-
-    public void LoadAd()
-    {
-        Debug.Log("Loading Ad: " + _adUnitId);
-        Advertisement.Load(_adUnitId, this);
-    }
 
     // Implement Load Listener and Show Listener interface methods:  
     public void OnUnityAdsAdLoaded(string adUnitId)
     {
         Debug.Log("Ad Loaded: " + adUnitId);
 
-        if (adUnitId.Equals(_adUnitId))
+        if (adUnitId.Equals(GameConst._adInterstitialUnitId))
         {
-            // Configure the button to call the ShowAd() method when clicked:
-            _showAdButton.onClick.AddListener(ShowAd);
-            // Enable the button for users to click:
-            _showAdButton.interactable = true;
+
         }
     }
 
     public void ShowAd()
     {
-        Debug.Log("Showing Ad: " + _adUnitId);
-        Advertisement.Show(_adUnitId, this);
+        Advertisement.Show(GameConst._adInterstitialUnitId, this);
     }
 
 

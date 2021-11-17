@@ -1,41 +1,28 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Advertisements;
 using UnityEngine.Events;
-using UnityEngine.UI;
-
 
 public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
-
-#if UNITY_IOS
-    private string _adUnitId = "Rewarded_iOS";
-#elif UNITY_ANDROID
-    private string _adUnitId = "Rewarded_Android";
-#else
-    private string _adUnitId = "";
-#endif
-
     public UnityAction<bool> OnShowResult;
-
-    private bool _loaded = false;
-
-    void Awake()
-    {
-        LoadAd();
-    }
-
-    private void LoadAd()
-    {
-        Debug.Log("Loading Ad: " + _adUnitId);
-        Advertisement.Load(_adUnitId, this);
-    }
-
+    
     public void ShowAd()
     {
-        if (_loaded)
+        StartCoroutine(ShowAdsWhenReady());
+    }
+
+    IEnumerator ShowAdsWhenReady()
+    {
+        while (!Advertisement.IsReady(GameConst._adRewardUnitId))
         {
-            Advertisement.Show(_adUnitId, this);
+            yield return new WaitForSeconds(0.5f);
         }
+
+        Advertisement.Show(GameConst._adRewardUnitId, this);
     }
 
 
@@ -44,9 +31,8 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     {
         Debug.Log("Ad Loaded: " + adUnitId);
 
-        if (adUnitId.Equals(_adUnitId))
+        if (adUnitId.Equals(GameConst._adRewardUnitId))
         {
-            _loaded = true;
         }
     }
 
@@ -54,16 +40,15 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     {
         Debug.Log($"Error loading Ad Unit {adUnitId}: {error.ToString()} - {message}");
 
-        if (adUnitId.Equals(_adUnitId))
+        if (adUnitId.Equals(GameConst._adRewardUnitId))
         {
-            _loaded = false;
         }
     }
 
     // Implement the Show Listener's OnUnityAdsShowComplete callback method to determine if the user gets a reward:
     public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
     {
-        if (adUnitId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+        if (adUnitId.Equals(GameConst._adRewardUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
 

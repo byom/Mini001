@@ -10,7 +10,8 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener
     [SerializeField] string _androidGameId;
     [SerializeField] string _iOsGameId;
     [SerializeField] bool _testMode = true;
-    [SerializeField] bool _enablePerPlacementMode = true;
+
+    bool _enablePerPlacementMode = false; // 是否单独加载每个adUnit
 
 
     private string _gameId;
@@ -24,7 +25,38 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener
         }
     }
 
+    public static BannerAds BannerAds
+    {
+        get
+        {
+            if (_bannerAds == null) _bannerAds = FindObjectOfType<BannerAds>();
+            return _bannerAds;
+        }
+    }
+
+    public static RewardedAds RewardedAds
+    {
+        get
+        {
+            if (_rewardedAds == null) _rewardedAds = FindObjectOfType<RewardedAds>();
+            return _rewardedAds;
+        }
+    }
+
+    public static InterstitialAds InterstitialAds
+    {
+        get
+        {
+            if (_interstitialAds == null) _interstitialAds = FindObjectOfType<InterstitialAds>();
+            return _interstitialAds;
+        }
+    }
+
     private static AdsManager _inst;
+    private static BannerAds _bannerAds;
+    private static RewardedAds _rewardedAds;
+    private static InterstitialAds _interstitialAds;
+
 
     private 
 

@@ -23,8 +23,14 @@ public class GameController : MonoBehaviour
     void OnClickReset()
     {
         var scene = SceneManager.GetActiveScene();
-
         SceneManager.LoadScene(scene.name);
+
+        //AdsManager.RewardedAds.OnShowResult = delegate(bool arg) 
+        //{
+            
+        //};
+
+        AdsManager.RewardedAds.ShowAd();
     }
 
     void OnUpdateScore(int score)

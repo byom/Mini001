@@ -8,14 +8,6 @@ public class BannerAds : MonoBehaviour
 {
     [SerializeField] BannerPosition _bannerPosition = BannerPosition.BOTTOM_CENTER;
 
-#if UNITY_IOS
-    private string _adUnitId = "Banner_iOS";
-#elif UNITY_ANDROID
-    private string _adUnitId = "Banner_Android";
-#else
-    private string _adUnitId = "";
-#endif
-
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -23,45 +15,19 @@ public class BannerAds : MonoBehaviour
 
     void Start()
     {
-        LoadBanner();
-
         StartCoroutine(ShowBannerWhenReady());
     }
 
     IEnumerator ShowBannerWhenReady()
     {
-        while (!Advertisement.IsReady(_adUnitId))
+        while (!Advertisement.IsReady(GameConst._adBannerUnitId))
         {
             yield return new WaitForSeconds(0.5f);
         }
-        Advertisement.Banner.Show(_adUnitId);
-    }
 
-
-    public void LoadBanner()
-    {
-        Debug.Log("Load Banner");
-        BannerLoadOptions options = new BannerLoadOptions
-        {
-            loadCallback = OnBannerLoaded,
-            errorCallback = OnBannerError
-        };
-
-        Advertisement.Banner.Load(_adUnitId, options);
-    }
-
-
-    void OnBannerLoaded()
-    {
-        Debug.Log("Banner loaded");
         ShowBannerAd();
     }
-
-    void OnBannerError(string message)
-    {
-        Debug.Log($"Banner Error: {message}");
-    }
-
+    
     void ShowBannerAd()
     {
         BannerOptions options = new BannerOptions
@@ -72,7 +38,7 @@ public class BannerAds : MonoBehaviour
         };
 
         Advertisement.Banner.SetPosition(_bannerPosition);
-        Advertisement.Banner.Show(_adUnitId, options);
+        Advertisement.Banner.Show(GameConst._adBannerUnitId, options);
     }
 
 
