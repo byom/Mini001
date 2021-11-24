@@ -8,16 +8,26 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    private static readonly string s_ScoreBestKey = "Score_Best";
+
     [SerializeField] Button _resetBtn;
 
     [SerializeField] TextMeshProUGUI _scoreTxt;
+    [SerializeField] TextMeshProUGUI _bestTxt;
 
 
     void Awake()
     {
+        Init();
+
         _resetBtn.onClick.AddListener(OnClickReset);
 
         Board.Instance.OnUpdateScoreAction += OnUpdateScore;
+    }
+
+    void Init()
+    {
+        _bestTxt.text = PlayerPrefs.GetInt(s_ScoreBestKey).ToString();
     }
 
     void OnClickReset()
@@ -36,12 +46,22 @@ public class GameController : MonoBehaviour
     void OnUpdateScore(int score)
     {
         _scoreTxt.text = score.ToString();
+
+        if(PlayerPrefs.GetInt(s_ScoreBestKey) < score)
+        {
+            _bestTxt.text = score.ToString();
+
+            PlayerPrefs.SetInt(s_ScoreBestKey, score);
+        }
     }
 
     void OnDestroy()
     {
         _resetBtn.onClick.RemoveListener(OnClickReset);
 
-        Board.Instance.OnUpdateScoreAction -= OnUpdateScore;
+        if(Board.Instance != null)
+        {
+            Board.Instance.OnUpdateScoreAction -= OnUpdateScore;
+        }
     }
 }

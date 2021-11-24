@@ -164,7 +164,6 @@ public class Board : MonoBehaviour
     /// <param name="dir"></param>
     public void MoveTo(Direction dir)
     {
-        Debug.LogError("Move dir:" + dir.ToString());
         if (dir == Direction.RIGHT)
         {
             for (int j = 0; j < col; j++)
